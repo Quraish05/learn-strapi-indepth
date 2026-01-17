@@ -168,35 +168,16 @@ export default [
 ---
 
 ### 5. `strapi::poweredBy`
-**Purpose**: Adds `X-Powered-By` header
-
-**When it runs**: Before response is sent
-
-**Configuration**:
-```typescript
-'strapi::poweredBy'  // Default: adds "Strapi" header
-```
-
-**What it does**:
-- Adds `X-Powered-By: Strapi` header
-- Can be disabled for security (hiding server technology)
+**Purpose**: Adds `X-Powered-By: Strapi` header  
+**Configuration**: `'strapi::poweredBy'`  
+**Note**: Often removed in production to hide server technology
 
 ---
 
 ### 6. `strapi::query`
-**Purpose**: Parses query string parameters
-
-**When it runs**: Before routes to parse `?key=value` params
-
-**Configuration**:
-```typescript
-'strapi::query'  // Default: parses all query params
-```
-
-**What it does**:
-- Parses URL query strings (`?page=1&limit=10`)
-- Makes params available in `ctx.query`
-- Essential for filtering, pagination, sorting
+**Purpose**: Parses URL query strings (`?page=1&limit=10`)  
+**Configuration**: `'strapi::query'`  
+**What it does**: Makes query params available in `ctx.query` for filtering, pagination, sorting
 
 ---
 
@@ -237,18 +218,9 @@ export default [
 ---
 
 ### 9. `strapi::favicon`
-**Purpose**: Serves favicon.ico
-
-**When it runs**: Before routes to serve favicon quickly
-
-**Configuration**:
-```typescript
-'strapi::favicon'  // Default: serves from public/favicon.ico
-```
-
-**What it does**:
-- Serves the favicon file
-- Prevents 404 errors for favicon requests
+**Purpose**: Serves favicon.ico from `public/favicon.ico`  
+**Configuration**: `'strapi::favicon'`  
+**What it does**: Prevents 404 errors for favicon requests
 
 ---
 
@@ -477,70 +449,33 @@ export default [
 
 ## 👀 Seeing Middlewares in Action
 
-Unlike UI or API responses that you can directly see, middlewares work "behind the scenes." However, there are several ways to verify they're working correctly.
+Unlike UI or API responses, middlewares work "behind the scenes." Here are practical ways to verify they're working:
 
 ### Method 1: Browser Developer Tools (Easiest)
 
-The easiest way to see middlewares in action is through your browser's developer tools.
+1. Open DevTools (`F12`) → **Network** tab
+2. Make a request to your Strapi API
+3. Click the request → **Headers** tab
 
-#### Step 1: Open Developer Tools
-1. Open your browser (Chrome, Firefox, Edge)
-2. Press `F12` or `Right-click → Inspect`
-3. Go to the **Network** tab
+**Look for middleware headers**:
+- **Security**: `X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection`
+- **CORS**: `Access-Control-Allow-Origin`, `Access-Control-Allow-Credentials`
+- **Powered-By**: `X-Powered-By: Strapi`
 
-#### Step 2: Make a Request
-- Visit your Strapi API: `http://localhost:1337/api/articles`
-- Or make a request from your frontend app
+### Method 2: Command Line (cURL)
 
-#### Step 3: Inspect Response Headers
-
-Click on any request and check the **Headers** tab. You'll see middleware in action:
-
-**Security Middleware (`strapi::security`)**:
-```
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-X-XSS-Protection: 1; mode=block
-```
-
-**CORS Middleware (`strapi::cors`)**:
-```
-Access-Control-Allow-Origin: http://localhost:3000
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
-Access-Control-Allow-Headers: Content-Type, Authorization
-```
-
-**Powered-By Middleware (`strapi::poweredBy`)**:
-```
-X-Powered-By: Strapi
-```
-
-**Example: Check CORS Headers**
 ```bash
-# In browser console, check response headers:
-fetch('http://localhost:1337/api/articles')
-  .then(res => {
-    console.log('CORS Headers:', {
-      'Access-Control-Allow-Origin': res.headers.get('Access-Control-Allow-Origin'),
-      'Access-Control-Allow-Credentials': res.headers.get('Access-Control-Allow-Credentials'),
-    });
-  });
-```
-
----
-
-### Method 2: Command Line with cURL
-
-Use `curl` to inspect HTTP headers and verify middleware behavior.
-
-#### Check All Response Headers
-```bash
-# See all headers (including middleware-added ones)
+# Check all response headers
 curl -I http://localhost:1337/api/articles
 
-# Or with verbose output
-curl -v http://localhost:1337/api/articles
+# Test CORS preflight
+curl -X OPTIONS http://localhost:1337/api/articles \
+  -H "Origin: http://localhost:3000" \
+  -H "Access-Control-Request-Method: POST" \
+  -v
+
+# Check security headers
+curl -I http://localhost:1337/api/articles | grep -i "x-"
 ```
 
 **Example Output**:
@@ -548,356 +483,55 @@ curl -v http://localhost:1337/api/articles
 HTTP/1.1 200 OK
 X-Powered-By: Strapi                    ← poweredBy middleware
 X-Content-Type-Options: nosniff         ← security middleware
-X-Frame-Options: SAMEORIGIN             ← security middleware
 Access-Control-Allow-Origin: http://localhost:3000  ← CORS middleware
-Content-Type: application/json
 ```
-
-#### Test CORS Preflight Request
-```bash
-# Simulate a CORS preflight (OPTIONS request)
-curl -X OPTIONS http://localhost:1337/api/articles \
-  -H "Origin: http://localhost:3000" \
-  -H "Access-Control-Request-Method: POST" \
-  -v
-```
-
-**Expected Response**:
-```
-HTTP/1.1 204 No Content
-Access-Control-Allow-Origin: http://localhost:3000
-Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
-Access-Control-Allow-Headers: Content-Type, Authorization
-```
-
-#### Test Security Headers
-```bash
-# Check security headers
-curl -I http://localhost:1337/api/articles | grep -i "x-"
-```
-
----
 
 ### Method 3: Server Console Logs
 
-The `strapi::logger` middleware logs every request to your console.
-
-#### View Request Logs
-When you make a request, check your Strapi server console:
+The `strapi::logger` middleware logs every request:
 
 ```bash
-# Start Strapi
+# Start Strapi and watch console
 npm run develop
-```
-
-**Example Console Output**:
-```
-[2024-01-16 10:30:45.123] http: GET /api/articles 200 in 45ms  ← logger middleware
-[2024-01-16 10:30:46.456] http: POST /api/articles 201 in 123ms
-[2024-01-16 10:30:47.789] http: GET /uploads/image.jpg 200 in 12ms
-```
-
-This shows:
-- ✅ **Logger middleware is working** - requests are being logged
-- ✅ **Timing information** - response time is recorded
-- ✅ **Status codes** - HTTP status is logged
-
----
-
-### Method 4: Custom Middleware for Verification
-
-Create a simple custom middleware to see execution flow:
-
-#### Create Verification Middleware
-```typescript
-// config/middlewares/request-tracker.ts
-export default (config, { strapi }) => {
-  return async (ctx, next) => {
-    const start = Date.now();
-    console.log('🔵 Middleware: Request started', {
-      method: ctx.request.method,
-      url: ctx.request.url,
-      timestamp: new Date().toISOString(),
-    });
-    
-    await next();
-    
-    const duration = Date.now() - start;
-    console.log('🟢 Middleware: Request completed', {
-      method: ctx.request.method,
-      url: ctx.request.url,
-      status: ctx.response.status,
-      duration: `${duration}ms`,
-    });
-  };
-};
-```
-
-#### Add to middlewares.ts
-```typescript
-export default [
-  'strapi::logger',
-  './middlewares/request-tracker',  // Your custom tracker
-  'strapi::errors',
-  // ... rest
-];
 ```
 
 **Console Output**:
 ```
-🔵 Middleware: Request started { method: 'GET', url: '/api/articles', ... }
-[2024-01-16 10:30:45.123] http: GET /api/articles 200 in 45ms
-🟢 Middleware: Request completed { method: 'GET', status: 200, duration: '45ms' }
+[2024-01-16 10:30:45.123] http: GET /api/articles 200 in 45ms  ← logger working
 ```
-
----
-
-### Method 5: Test Each Middleware Individually
-
-#### Test Logger Middleware
-```bash
-# Make any request and check console
-curl http://localhost:1337/api/articles
-# ✅ Should see log in Strapi console
-```
-
-#### Test CORS Middleware
-```bash
-# Test from different origin
-curl -H "Origin: http://localhost:3000" \
-     -H "Access-Control-Request-Method: GET" \
-     -X OPTIONS \
-     http://localhost:1337/api/articles -v
-
-# ✅ Should see CORS headers in response
-```
-
-#### Test Body Parser Middleware
-```bash
-# Send JSON data
-curl -X POST http://localhost:1337/api/articles \
-  -H "Content-Type: application/json" \
-  -d '{"title":"Test","content":"Body parser test"}'
-
-# ✅ If body parser works, data should be received
-# ❌ If not working, you'll get parsing errors
-```
-
-#### Test Static File Middleware
-```bash
-# Try to access a static file
-curl -I http://localhost:1337/uploads/some-image.jpg
-
-# ✅ Should return 200 with file headers
-# ❌ If middleware not working, returns 404
-```
-
-#### Test Security Middleware
-```bash
-# Check security headers
-curl -I http://localhost:1337/api/articles | grep -E "(X-Content-Type|X-Frame|X-XSS)"
-
-# ✅ Should see security headers
-```
-
-#### Test Error Middleware
-```bash
-# Make a request that will fail
-curl http://localhost:1337/api/nonexistent
-
-# ✅ Should get formatted error response (not raw error)
-# Response should be JSON: {"error": {...}}
-```
-
----
-
-### Method 6: Browser Network Tab - Detailed Inspection
-
-#### Step-by-Step Verification
-
-1. **Open Network Tab** in browser DevTools
-2. **Make a Request** to your Strapi API
-3. **Click on the Request** to see details
-4. **Check These Tabs**:
-
-**Headers Tab**:
-- **Request Headers**: See what your browser sent
-- **Response Headers**: See what Strapi sent (middleware-added headers)
-
-**Preview/Response Tab**:
-- See the actual response body
-- Verify error formatting (error middleware)
-
-**Timing Tab**:
-- See request/response timing
-- Verify logger middleware timing matches
-
-**Example: Verify CORS is Working**
-```
-Request URL: http://localhost:1337/api/articles
-Request Method: GET
-Status Code: 200 OK
-
-Response Headers:
-  Access-Control-Allow-Origin: http://localhost:3000  ← CORS working!
-  Access-Control-Allow-Credentials: true
-  X-Content-Type-Options: nosniff  ← Security working!
-  X-Powered-By: Strapi  ← PoweredBy working!
-```
-
----
-
-### Method 7: Test with Postman or Insomnia
-
-API testing tools show all headers clearly:
-
-#### Using Postman
-1. Create a new request to `http://localhost:1337/api/articles`
-2. Send the request
-3. Check the **Headers** tab in the response
-4. Look for middleware-added headers
-
-#### Using Insomnia
-1. Create a request
-2. Send it
-3. Expand **Response → Headers**
-4. Verify middleware headers are present
-
----
-
-### Method 8: Verify Middleware Order
-
-Create a middleware that logs its position:
-
-```typescript
-// config/middlewares/middleware-1.ts
-export default () => {
-  return async (ctx, next) => {
-    console.log('1️⃣ First middleware');
-    await next();
-  };
-};
-
-// config/middlewares/middleware-2.ts
-export default () => {
-  return async (ctx, next) => {
-    console.log('2️⃣ Second middleware');
-    await next();
-  };
-};
-```
-
-```typescript
-// config/middlewares.ts
-export default [
-  './middlewares/middleware-1',
-  './middlewares/middleware-2',
-  'strapi::logger',
-  // ...
-];
-```
-
-**Console Output** (shows execution order):
-```
-1️⃣ First middleware
-2️⃣ Second middleware
-[2024-01-16 10:30:45.123] http: GET /api/articles 200 in 45ms
-```
-
----
 
 ### Quick Verification Checklist
 
-Run these commands to verify all middlewares:
-
 ```bash
-# 1. Check logger (should see logs in console)
+# 1. Logger - check console for request logs
 curl http://localhost:1337/api/articles
 
-# 2. Check security headers
-curl -I http://localhost:1337/api/articles | grep -i "x-content-type\|x-frame\|x-xss"
+# 2. Security headers
+curl -I http://localhost:1337/api/articles | grep -i "x-content-type\|x-frame"
 
-# 3. Check CORS
+# 3. CORS headers
 curl -I -H "Origin: http://localhost:3000" http://localhost:1337/api/articles | grep -i "access-control"
 
-# 4. Check powered-by
-curl -I http://localhost:1337/api/articles | grep -i "x-powered-by"
-
-# 5. Check static files
+# 4. Static files
 curl -I http://localhost:1337/uploads/test.jpg
 
-# 6. Check body parser (POST with JSON)
+# 5. Body parser (POST with JSON)
 curl -X POST http://localhost:1337/api/articles \
   -H "Content-Type: application/json" \
   -d '{"test":"data"}'
 
-# 7. Check error handling
+# 6. Error handling
 curl http://localhost:1337/api/nonexistent
 ```
 
----
+### Visual Indicators
 
-### Visual Indicators That Middlewares Are Working
-
-✅ **Logger Middleware Working**:
-- See request logs in Strapi console
-- Logs show method, URL, status, and timing
-
-✅ **Security Middleware Working**:
-- Response headers include `X-Content-Type-Options`, `X-Frame-Options`
-- No security warnings in browser console
-
-✅ **CORS Middleware Working**:
-- Frontend can make requests without CORS errors
-- Response includes `Access-Control-Allow-Origin` header
-- Preflight OPTIONS requests return 204
-
-✅ **Body Parser Working**:
-- POST/PUT requests with JSON body work correctly
-- `ctx.request.body` contains parsed data
-- No parsing errors in console
-
-✅ **Static File Middleware Working**:
-- Images/files are accessible via URL
-- Files in `public/uploads/` are served
-- No 404 errors for static assets
-
-✅ **Error Middleware Working**:
-- Errors return formatted JSON responses
-- No raw stack traces exposed
-- Consistent error format
-
----
-
-## 🔍 Debugging Middleware
-
-### Check Middleware Order
-```typescript
-// Add logging to see execution order
-export default [
-  'strapi::logger',  // Will log first
-  // ... rest
-];
-```
-
-### Test CORS Configuration
-```bash
-# Test from browser console
-fetch('http://localhost:1337/api/articles', {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then(res => res.json())
-  .then(console.log)
-  .catch(console.error);
-```
-
-### Verify Static Files
-```bash
-# Check if files are accessible
-curl http://localhost:1337/uploads/image.jpg
-```
+✅ **Logger**: Request logs appear in Strapi console  
+✅ **Security**: Response headers include `X-Content-Type-Options`, `X-Frame-Options`  
+✅ **CORS**: Frontend requests work without CORS errors, headers present  
+✅ **Body Parser**: POST/PUT requests with JSON work correctly  
+✅ **Static Files**: Images/files accessible via URL  
+✅ **Error Handler**: Errors return formatted JSON (not raw stack traces)
 
 ## 📝 Summary
 

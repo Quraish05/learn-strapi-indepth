@@ -117,6 +117,11 @@ When updating MD files after staging and committing, follow this structure:
 - Start with "What Was Achieved" section for every update
 - Include code examples with syntax highlighting
 - Add troubleshooting sections for common issues
+- **Keep documentation concise and relevant** - avoid redundancy and overly verbose explanations
+- **Remove redundant content**: If information is repeated in multiple places, consolidate it
+- **Condense straightforward sections**: Simple concepts don't need lengthy explanations (e.g., simple middleware like `favicon` can be 2-3 lines instead of 10+)
+- **Combine overlapping methods**: If multiple verification/debugging methods do the same thing, keep only the most practical ones
+- **Prioritize practical information**: Focus on "how to use" rather than lengthy theoretical explanations
 - Keep local documentation concise but complete
 - **When documentation becomes lengthy**: Replace detailed explanations with external links to:
   - [Strapi Deep Dive Documentation](https://github.com/riteshaxelerant/Strapi-Deep-Dive-and-Documentation/tree/main/docs)
@@ -125,6 +130,16 @@ When updating MD files after staging and committing, follow this structure:
 - Document API endpoints with examples
 - Include migration steps if database changes are involved
 - Always end with a "Further Reading" or "References" section linking to external docs when applicable
+
+### Documentation Length & Redundancy Guidelines
+- **Target length**: Documentation should be comprehensive but not verbose (aim for ~200-600 lines for foundation docs)
+- **Before adding new content**: Check if similar information already exists in the document
+- **Remove redundant sections**: If a concept is explained multiple times, consolidate into one clear explanation
+- **Condense simple concepts**: Straightforward features (like simple middleware, basic configs) should be 2-5 lines, not 10-15
+- **Combine similar methods**: If documenting multiple ways to do the same thing, keep only the most practical 2-3 methods
+- **Remove duplicate examples**: Don't repeat the same code example with minor variations
+- **Focus on practical usage**: Prioritize "how to use" over lengthy theoretical background
+- **When in doubt**: Prefer concise, actionable information over verbose explanations
 
 ## 🏗️ Code Structure
 
