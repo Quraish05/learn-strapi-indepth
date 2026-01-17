@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: strapi-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+      POSTGRES_DB: strapi
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Uncomment the line below to use a local directory for easier backup access
+      # - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strapi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: postgresql-pgadmin_web
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    depends_on:
+      - postgres
+    ports:
+      - "6420:80"
+
+volumes:
+  postgres_data:
+
