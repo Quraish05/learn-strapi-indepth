@@ -1,0 +1,246 @@
+# Strapi Backend Cursor Rules
+
+## 🔄 Reusable Functions & Code Reusability
+
+### API Error Handling
+- **ALWAYS** check for existing error handling utilities before creating new error handling code
+- If error handling utilities exist in `src/utils/` or `src/extensions/`, **MUST** use them
+- If no error handling utilities exist, create reusable functions in `src/utils/`:
+  - `handleControllerError(error: unknown, ctx: Context): void` - Standardized controller error handler
+  - `handleServiceError(error: unknown): never` - Service layer error handler
+  - `formatApiError(error: unknown): { message: string; status: number }` - Error formatter
+  - `validateRequest(ctx: Context, schema: Schema): void` - Request validation utility
+- **NEVER** duplicate error handling logic across multiple controllers or services
+- All controllers (`src/api/**/controllers/*.ts`) **MUST** use these reusable error handlers
+- All services (`src/api/**/services/*.ts`) **MUST** use these reusable error handlers
+
+### Function Reusability Rules
+- Before creating a new function, **ALWAYS** search the codebase for similar functionality
+- If a similar function exists, refactor it to be reusable and use it instead
+- Create utility functions in `src/utils/` for:
+  - Data transformation
+  - Validation
+  - Formatting
+  - Common business logic
+  - Database operations
+- Functions should be:
+  - Well-typed with TypeScript
+  - Documented with JSDoc comments
+  - Exported from a central `src/utils/index.ts` file
+  - Tested when possible
+
+### Controller Patterns
+- **MUST** use consistent error handling in all controllers:
+  ```typescript
+  try {
+    // Controller logic
+    return ctx.body = { data: result };
+  } catch (error) {
+    handleControllerError(error, ctx);
+  }
+  ```
+- Use `src/utils/controller-helpers.ts` if it exists, otherwise create it
+
+### Service Patterns
+- Services should handle business logic and data operations
+- **MUST** use reusable error handlers
+- Return consistent data structures
+- Use `src/utils/service-helpers.ts` if it exists, otherwise create it
+
+## 📝 Documentation Updates
+
+### Commit & Push Documentation Rules
+- **AFTER** staging and committing code, **MUST** update relevant documentation files:
+  - `README.md` - Update if project setup, dependencies, or major features changed
+  - `QUICK_REFERENCE.md` - Update quick reference commands and shortcuts
+  - `docs/**/*.md` - Update relevant documentation files based on changes:
+    - `docs/01-foundations/DATA_PERSISTENCE.md` - Update when data models, persistence, or backup strategies change
+    - `docs/01-foundations/DATABASE_COMMANDS.md` - Update when database operations or commands change
+    - `docs/01-foundations/MIDDLEWARES.md` - Update when middleware configuration or usage changes
+    - Any other relevant docs in `docs/` folder
+
+### Documentation Update Process
+When updating MD files after staging and committing, follow this structure:
+
+1. **First Section: What Was Achieved**
+   - **ALWAYS** start with a brief summary of what was built or achieved
+   - Explain the purpose and value of the changes
+   - Keep this section concise (2-4 sentences)
+   - Example format:
+     ```
+     ## What Was Achieved
+     [Brief description of what was built, why it was needed, and what problem it solves]
+     ```
+
+2. **Second Section: Additional Information**
+   - Add more detailed information if relevant
+   - Include practical usage examples
+   - Document configuration changes
+   - Explain API endpoints or database changes
+   - Add code examples with syntax highlighting
+
+3. **External Documentation References**
+   - **ALWAYS** refer to external documentation for deeper understanding:
+     - **Strapi Deep Dive Docs**: Reference [Strapi Deep Dive Documentation](https://github.com/riteshaxelerant/Strapi-Deep-Dive-and-Documentation/tree/main/docs) for comprehensive guides and examples
+     - **Official Strapi Docs**: Reference [Official Strapi Documentation](https://docs.strapi.io/) for official API references and best practices
+   - When the MD file becomes too large or detailed information is available externally:
+     - **PREFER** adding external links pointing to exact or relevant documentation
+     - Link to specific sections when possible (e.g., specific topics in the Deep Dive docs or official Strapi docs)
+     - Use descriptive link text that indicates what information the link provides
+   - Format external links clearly:
+     ```markdown
+     ## Further Reading
+     - [Strapi Deep Dive: [Topic Name]](https://github.com/riteshaxelerant/Strapi-Deep-Dive-and-Documentation/tree/main/docs/[specific-path])
+     - [Official Strapi Docs: [Topic Name]](https://docs.strapi.io/[specific-path])
+     ```
+
+### Documentation Content Requirements
+- Documentation updates should include:
+  - **Brief description** of what was developed or achieved (in the "What Was Achieved" section)
+  - **How to use** the new feature or change
+  - **Example code** if applicable
+  - **Configuration changes** if any (e.g., `config/*.ts` changes)
+  - **API endpoint changes** if any
+  - **Database schema changes** if any
+  - **Breaking changes** if any
+  - **External links** to relevant documentation for deeper understanding
+- Documentation should be written so a **3rd person** can understand:
+  - What the feature does
+  - Why it was added
+  - How to use it
+  - What dependencies or setup it requires
+  - What configuration is needed
+  - Where to find more detailed information
+
+### Documentation Format
+- Use clear headings and sections
+- Start with "What Was Achieved" section for every update
+- Include code examples with syntax highlighting
+- Add troubleshooting sections for common issues
+- **Keep documentation concise and relevant** - avoid redundancy and overly verbose explanations
+- **Remove redundant content**: If information is repeated in multiple places, consolidate it
+- **Condense straightforward sections**: Simple concepts don't need lengthy explanations (e.g., simple middleware like `favicon` can be 2-3 lines instead of 10+)
+- **Combine overlapping methods**: If multiple verification/debugging methods do the same thing, keep only the most practical ones
+- **Prioritize practical information**: Focus on "how to use" rather than lengthy theoretical explanations
+- Keep local documentation concise but complete
+- **When documentation becomes lengthy**: Replace detailed explanations with external links to:
+  - [Strapi Deep Dive Documentation](https://github.com/riteshaxelerant/Strapi-Deep-Dive-and-Documentation/tree/main/docs)
+  - [Official Strapi Documentation](https://docs.strapi.io/)
+- Update the "What Gets Stored" or similar sections when adding content types
+- Document API endpoints with examples
+- Include migration steps if database changes are involved
+- Always end with a "Further Reading" or "References" section linking to external docs when applicable
+
+### Documentation Length & Redundancy Guidelines
+- **Target length**: Documentation should be comprehensive but not verbose (aim for ~200-600 lines for foundation docs)
+- **Before adding new content**: Check if similar information already exists in the document
+- **Remove redundant sections**: If a concept is explained multiple times, consolidate into one clear explanation
+- **Condense simple concepts**: Straightforward features (like simple middleware, basic configs) should be 2-5 lines, not 10-15
+- **Combine similar methods**: If documenting multiple ways to do the same thing, keep only the most practical 2-3 methods
+- **Remove duplicate examples**: Don't repeat the same code example with minor variations
+- **Focus on practical usage**: Prioritize "how to use" over lengthy theoretical background
+- **When in doubt**: Prefer concise, actionable information over verbose explanations
+
+## 🏗️ Code Structure
+
+### File Organization
+- Controllers: `src/api/**/controllers/*.ts`
+- Services: `src/api/**/services/*.ts`
+- Routes: `src/api/**/routes/*.ts`
+- Content Types: `src/api/**/content-types/**/schema.json`
+- Utilities: `src/utils/**/*.ts`
+- Extensions: `src/extensions/**/*.ts`
+- Config: `config/**/*.ts`
+
+### Strapi Best Practices
+- Use Strapi factories when possible (`factories.createCoreController`, etc.)
+- Customize controllers and services only when necessary
+- Follow Strapi's content-type structure
+- Use proper TypeScript types from `types/generated/`
+- Leverage Strapi's built-in validation
+
+### TypeScript Best Practices
+- **ALWAYS** use TypeScript types, avoid `any`
+- Use generated types from `types/generated/` when available
+- Define custom types in appropriate locations
+- Use type inference when possible
+
+## 🔍 Code Quality
+
+### Before Committing
+1. Check for reusable functions that could be used
+2. Refactor duplicate code into utilities
+3. Update all relevant documentation files
+4. Ensure TypeScript types are correct
+5. Test the changes locally
+6. Verify Strapi builds without errors (`npm run build`)
+
+### Error Handling
+- **NEVER** use `console.error` without proper error handling
+- **ALWAYS** return meaningful error messages via Strapi's context
+- Use Strapi's error handling patterns
+- Log errors appropriately
+- Handle validation errors properly
+
+### API Response Patterns
+- Use consistent response formats:
+  ```typescript
+  // Success
+  ctx.body = { data: result };
+  
+  // Error (handled by utility)
+  ctx.throw(statusCode, errorMessage);
+  ```
+
+## 📦 Dependencies
+
+### Adding Dependencies
+- Check if a similar package is already installed
+- Prefer Strapi-compatible packages
+- Document why the dependency was added in commit message
+- Update `package.json` and run `npm install`
+- Check for Strapi version compatibility
+
+## 🗄️ Database & Content Types
+
+### Content Type Changes
+- When adding/modifying content types, update:
+  - Schema files (`schema.json`)
+  - Documentation in `docs/01-foundations/DATA_PERSISTENCE.md`
+  - Any relevant API documentation
+- Document relationships and field types
+- Include migration notes if needed
+
+### Database Operations
+- Document database commands in `docs/01-foundations/DATABASE_COMMANDS.md`
+- Use provided backup/restore scripts when available
+- Document any custom database operations
+
+## 🔧 Configuration
+
+### Config File Changes
+- When modifying `config/*.ts` files, document:
+  - What changed
+  - Why it changed
+  - How it affects the application
+  - Any environment variables needed
+- Update relevant documentation files
+
+## 🚀 Performance
+
+### Optimization Rules
+- Use Strapi's built-in caching when appropriate
+- Optimize database queries
+- Use proper indexing strategies
+- Implement pagination for large datasets
+- Use Strapi's populate feature efficiently
+
+## 🔐 Security
+
+### Security Best Practices
+- Validate all inputs
+- Use Strapi's permission system
+- Sanitize user inputs
+- Follow Strapi security guidelines
+- Document security-related changes
+
