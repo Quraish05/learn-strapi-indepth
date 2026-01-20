@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meal_slots",
+  "info": {
+    "singularName": "meal-slot",
+    "pluralName": "meal-slots",
+    "displayName": "Meal Slot"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titleOfMealSlot": {
+      "type": "string"
+    },
+    "date": {
+      "type": "date"
+    },
+    "slotType": {
+      "type": "enumeration",
+      "enum": [
+        "breakfast",
+        "brunch",
+        "lunch",
+        "evening-snack",
+        "dinner"
+      ]
+    },
+    "foodOptions": {
+      "type": "dynamiczone",
+      "components": [
+        "plan-item.recipe-item",
+        "plan-item.ingredient-item"
+      ]
+    },
+    "meal_prep_plan": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::meal-prep-plan.meal-prep-plan",
+      "inversedBy": "meal_slots"
+    }
+  }
+}

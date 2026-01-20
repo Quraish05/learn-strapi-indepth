@@ -519,6 +519,82 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMealPrepPlanMealPrepPlan
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'meal_prep_plans';
+  info: {
+    displayName: 'Meal Prep Plan';
+    pluralName: 'meal-prep-plans';
+    singularName: 'meal-prep-plan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-prep-plan.meal-prep-plan'
+    > &
+      Schema.Attribute.Private;
+    meal_slots: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-slot.meal-slot'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    statusOfThePlan: Schema.Attribute.Enumeration<
+      ['draft', 'active', 'archived']
+    >;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    weekStartDate: Schema.Attribute.Date;
+  };
+}
+
+export interface ApiMealSlotMealSlot extends Struct.CollectionTypeSchema {
+  collectionName: 'meal_slots';
+  info: {
+    displayName: 'Meal Slot';
+    pluralName: 'meal-slots';
+    singularName: 'meal-slot';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    foodOptions: Schema.Attribute.DynamicZone<
+      ['plan-item.recipe-item', 'plan-item.ingredient-item']
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-slot.meal-slot'
+    > &
+      Schema.Attribute.Private;
+    meal_prep_plan: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::meal-prep-plan.meal-prep-plan'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slotType: Schema.Attribute.Enumeration<
+      ['breakfast', 'brunch', 'lunch', 'evening-snack', 'dinner']
+    >;
+    titleOfMealSlot: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
   collectionName: 'recipes';
   info: {
@@ -1061,6 +1137,8 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::blog.blog': ApiBlogBlog;
       'api::ingredient.ingredient': ApiIngredientIngredient;
+      'api::meal-prep-plan.meal-prep-plan': ApiMealPrepPlanMealPrepPlan;
+      'api::meal-slot.meal-slot': ApiMealSlotMealSlot;
       'api::recipe.recipe': ApiRecipeRecipe;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

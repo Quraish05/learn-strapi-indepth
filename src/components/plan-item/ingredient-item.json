@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_plan_item_ingredient_items",
+  "info": {
+    "displayName": "ingredient-item"
+  },
+  "options": {},
+  "attributes": {
+    "ingredient": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ingredient.ingredient"
+    },
+    "quantity": {
+      "type": "decimal"
+    }
+  },
+  "config": {}
+}

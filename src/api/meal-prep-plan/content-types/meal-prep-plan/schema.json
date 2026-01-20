@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meal_prep_plans",
+  "info": {
+    "singularName": "meal-prep-plan",
+    "pluralName": "meal-prep-plans",
+    "displayName": "Meal Prep Plan"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "meal_slots": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::meal-slot.meal-slot",
+      "mappedBy": "meal_prep_plan"
+    },
+    "title": {
+      "type": "string"
+    },
+    "weekStartDate": {
+      "type": "date"
+    },
+    "statusOfThePlan": {
+      "type": "enumeration",
+      "enum": [
+        "draft",
+        "active",
+        "archived"
+      ]
+    }
+  }
+}
