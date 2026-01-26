@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_mega_menu_menu_teasers",
+  "info": {
+    "displayName": "menu-teaser"
+  },
+  "options": {},
+  "attributes": {
+    "recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recipe.recipe"
+    },
+    "title": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}

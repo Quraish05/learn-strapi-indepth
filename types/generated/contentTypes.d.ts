@@ -595,6 +595,35 @@ export interface ApiMealSlotMealSlot extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMegaMenuMegaMenu extends Struct.SingleTypeSchema {
+  collectionName: 'mega_menus';
+  info: {
+    displayName: 'Mega Menu';
+    pluralName: 'mega-menus';
+    singularName: 'mega-menu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mega-menu.mega-menu'
+    > &
+      Schema.Attribute.Private;
+    menuSections: Schema.Attribute.Component<'mega-menu.menu-section', true>;
+    menuTitle: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
   collectionName: 'recipes';
   info: {
@@ -606,6 +635,7 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    coverImage: Schema.Attribute.Media<'images' | 'files'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -616,6 +646,7 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       'api::recipe.recipe'
     > &
       Schema.Attribute.Private;
+    otherImages: Schema.Attribute.Media<'images', true>;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1139,6 +1170,7 @@ declare module '@strapi/strapi' {
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::meal-prep-plan.meal-prep-plan': ApiMealPrepPlanMealPrepPlan;
       'api::meal-slot.meal-slot': ApiMealSlotMealSlot;
+      'api::mega-menu.mega-menu': ApiMegaMenuMegaMenu;
       'api::recipe.recipe': ApiRecipeRecipe;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

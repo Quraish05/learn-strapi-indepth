@@ -1,0 +1,81 @@
+{
+  "collectionName": "components_mega_menu_menu_links",
+  "info": {
+    "displayName": "menu-link"
+  },
+  "options": {},
+  "attributes": {
+    "linkText": {
+      "type": "string"
+    },
+    "linkType": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "recipe",
+        "meal-plan",
+        "meal-slot",
+        "ingredient",
+        "custom-url"
+      ]
+    },
+    "recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recipe.recipe",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "recipe"
+          ]
+        }
+      }
+    },
+    "mealPrepPlan": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::meal-prep-plan.meal-prep-plan",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "meal-plan"
+          ]
+        }
+      }
+    },
+    "ingredient": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ingredient.ingredient",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "ingredient"
+          ]
+        }
+      }
+    },
+    "customUrl": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linkType"
+            },
+            "custom-url"
+          ]
+        }
+      }
+    }
+  }
+}
