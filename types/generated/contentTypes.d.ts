@@ -486,12 +486,46 @@ export interface ApiBlogBlog extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
-  collectionName: 'recipes';
+export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
+  collectionName: 'ingredients';
   info: {
-    displayName: 'Recipe';
-    pluralName: 'recipes';
-    singularName: 'recipe';
+    displayName: 'Ingredient';
+    pluralName: 'ingredients';
+    singularName: 'ingredient';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    image: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ingredient.ingredient'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMealPrepPlanMealPrepPlan
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'meal_prep_plans';
+  info: {
+    displayName: 'Meal Prep Plan';
+    pluralName: 'meal-prep-plans';
+    singularName: 'meal-prep-plan';
   };
   options: {
     draftAndPublish: true;
@@ -503,9 +537,116 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
+      'api::meal-prep-plan.meal-prep-plan'
+    > &
+      Schema.Attribute.Private;
+    meal_slots: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-slot.meal-slot'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    statusOfThePlan: Schema.Attribute.Enumeration<
+      ['draft', 'active', 'archived']
+    >;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    weekStartDate: Schema.Attribute.Date;
+  };
+}
+
+export interface ApiMealSlotMealSlot extends Struct.CollectionTypeSchema {
+  collectionName: 'meal_slots';
+  info: {
+    displayName: 'Meal Slot';
+    pluralName: 'meal-slots';
+    singularName: 'meal-slot';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    foodOptions: Schema.Attribute.DynamicZone<
+      ['plan-item.recipe-item', 'plan-item.ingredient-item']
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-slot.meal-slot'
+    > &
+      Schema.Attribute.Private;
+    meal_prep_plan: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::meal-prep-plan.meal-prep-plan'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slotType: Schema.Attribute.Enumeration<
+      ['breakfast', 'brunch', 'lunch', 'evening-snack', 'dinner']
+    >;
+    titleOfMealSlot: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMegaMenuMegaMenu extends Struct.SingleTypeSchema {
+  collectionName: 'mega_menus';
+  info: {
+    displayName: 'Mega Menu';
+    pluralName: 'mega-menus';
+    singularName: 'mega-menu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mega-menu.mega-menu'
+    > &
+      Schema.Attribute.Private;
+    menuSections: Schema.Attribute.Component<'mega-menu.menu-section', true>;
+    menuTitle: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
+  collectionName: 'recipes';
+  info: {
+    displayName: 'Recipe';
+    pluralName: 'recipes';
+    singularName: 'recipe';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    coverImage: Schema.Attribute.Media<'images' | 'files'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ingredientItems: Schema.Attribute.Component<'shared.ingredient-item', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
       'api::recipe.recipe'
     > &
       Schema.Attribute.Private;
+    otherImages: Schema.Attribute.Media<'images', true>;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1026,6 +1167,10 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
       'api::blog.blog': ApiBlogBlog;
+      'api::ingredient.ingredient': ApiIngredientIngredient;
+      'api::meal-prep-plan.meal-prep-plan': ApiMealPrepPlanMealPrepPlan;
+      'api::meal-slot.meal-slot': ApiMealSlotMealSlot;
+      'api::mega-menu.mega-menu': ApiMegaMenuMegaMenu;
       'api::recipe.recipe': ApiRecipeRecipe;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

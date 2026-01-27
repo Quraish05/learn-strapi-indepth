@@ -13,6 +13,26 @@
   "attributes": {
     "title": {
       "type": "string"
+    },
+    "ingredientItems": {
+      "type": "component",
+      "component": "shared.ingredient-item",
+      "repeatable": true
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "otherImages": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

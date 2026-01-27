@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_mega_menu_menu_sections",
+  "info": {
+    "displayName": "menu-section"
+  },
+  "options": {},
+  "attributes": {
+    "sectionLabel": {
+      "type": "string"
+    },
+    "menuLinks": {
+      "type": "component",
+      "component": "mega-menu.menu-link",
+      "repeatable": true
+    },
+    "teaserColumn": {
+      "type": "component",
+      "component": "mega-menu.menu-teaser",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_plan_item_recipe_items",
+  "info": {
+    "displayName": "recipe-item"
+  },
+  "options": {},
+  "attributes": {
+    "recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recipe.recipe"
+    },
+    "quantity": {
+      "type": "decimal"
+    },
+    "unit": {
+      "type": "enumeration",
+      "enum": [
+        "serving",
+        "bowl",
+        "plate"
+      ]
+    }
+  },
+  "config": {}
+}

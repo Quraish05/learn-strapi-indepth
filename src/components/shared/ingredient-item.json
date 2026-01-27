@@ -1,0 +1,43 @@
+{
+  "collectionName": "components_shared_ingredient_items",
+  "info": {
+    "displayName": "Ingredient Amount"
+  },
+  "options": {},
+  "attributes": {
+    "quantity": {
+      "type": "decimal",
+      "required": true
+    },
+    "unit": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "g",
+        "kg",
+        "ml",
+        "l",
+        "tsp",
+        "tbsp",
+        "cup",
+        "pcs"
+      ]
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "required": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes": {
+      "type": "blocks"
+    },
+    "baseIngredient": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ingredient.ingredient"
+    }
+  },
+  "config": {}
+}

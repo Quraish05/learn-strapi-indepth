@@ -1,0 +1,492 @@
+[
+  {
+    "title": "Week 1 - Healthy Meal Plan",
+    "weekStartDate": "2026-01-25",
+    "statusOfThePlan": "active",
+    "mealSlots": [
+      {
+        "titleOfMealSlot": "Monday Breakfast",
+        "date": "2026-01-25",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "classic-spaghetti-carbonara",
+            "quantity": 1,
+            "unit": "serving"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "eggs",
+            "quantity": 2
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Monday Lunch",
+        "date": "2026-01-25",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "chicken-stir-fry-with-vegetables",
+            "quantity": 2,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Monday Dinner",
+        "date": "2026-01-25",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "fresh-tomato-basil-pasta",
+            "quantity": 2,
+            "unit": "plate"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "parmesan-cheese",
+            "quantity": 50
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Tuesday Breakfast",
+        "date": "2024-01-02",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "eggs",
+            "quantity": 2
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "butter",
+            "quantity": 20
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "milk",
+            "quantity": 200
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Tuesday Lunch",
+        "date": "2024-01-02",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "vegetable-soup",
+            "quantity": 1,
+            "unit": "bowl"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Tuesday Dinner",
+        "date": "2024-01-02",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "lemon-garlic-roasted-chicken",
+            "quantity": 2,
+            "unit": "serving"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "rice",
+            "quantity": 150
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Wednesday Breakfast",
+        "date": "2024-01-03",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "classic-chocolate-chip-cookies",
+            "quantity": 3,
+            "unit": "serving"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "milk",
+            "quantity": 250
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Wednesday Lunch",
+        "date": "2024-01-03",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "homemade-pizza-margherita",
+            "quantity": 2,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Wednesday Dinner",
+        "date": "2024-01-03",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "creamy-chicken-and-mushroom-risotto",
+            "quantity": 2,
+            "unit": "plate"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Thursday Breakfast",
+        "date": "2024-01-04",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "eggs",
+            "quantity": 3
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "tomato",
+            "quantity": 2
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "onion",
+            "quantity": 0.5
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Thursday Lunch",
+        "date": "2024-01-04",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "fresh-tomato-basil-pasta",
+            "quantity": 1,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Thursday Dinner",
+        "date": "2024-01-04",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "chicken-stir-fry-with-vegetables",
+            "quantity": 2,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Friday Breakfast",
+        "date": "2024-01-05",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "milk",
+            "quantity": 300
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "sugar",
+            "quantity": 20
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Friday Lunch",
+        "date": "2024-01-05",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "vegetable-soup",
+            "quantity": 1,
+            "unit": "bowl"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "butter",
+            "quantity": 20
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Friday Dinner",
+        "date": "2024-01-05",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "classic-spaghetti-carbonara",
+            "quantity": 2,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Saturday Brunch",
+        "date": "2024-01-06",
+        "slotType": "brunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "homemade-pizza-margherita",
+            "quantity": 1,
+            "unit": "serving"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "eggs",
+            "quantity": 2
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Saturday Dinner",
+        "date": "2024-01-06",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "lemon-garlic-roasted-chicken",
+            "quantity": 3,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Sunday Breakfast",
+        "date": "2024-01-07",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "classic-chocolate-chip-cookies",
+            "quantity": 2,
+            "unit": "serving"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "milk",
+            "quantity": 200
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Sunday Lunch",
+        "date": "2024-01-07",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "creamy-chicken-and-mushroom-risotto",
+            "quantity": 2,
+            "unit": "plate"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Sunday Evening Snack",
+        "date": "2024-01-07",
+        "slotType": "evening-snack",
+        "foodOptions": [
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "lemon",
+            "quantity": 1
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "sugar",
+            "quantity": 10
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Sunday Dinner",
+        "date": "2024-01-07",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "fresh-tomato-basil-pasta",
+            "quantity": 2,
+            "unit": "serving"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Week 2 - Mediterranean Diet",
+    "weekStartDate": "2024-01-08",
+    "statusOfThePlan": "draft",
+    "mealSlots": [
+      {
+        "titleOfMealSlot": "Monday Breakfast",
+        "date": "2024-01-08",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "eggs",
+            "quantity": 2
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "olive-oil",
+            "quantity": 15
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "tomato",
+            "quantity": 1
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Monday Lunch",
+        "date": "2024-01-08",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "fresh-tomato-basil-pasta",
+            "quantity": 1,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Monday Dinner",
+        "date": "2024-01-08",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "homemade-pizza-margherita",
+            "quantity": 2,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Tuesday Breakfast",
+        "date": "2024-01-09",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "milk",
+            "quantity": 250
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "sugar",
+            "quantity": 15
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Tuesday Lunch",
+        "date": "2024-01-09",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "vegetable-soup",
+            "quantity": 1,
+            "unit": "bowl"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Tuesday Dinner",
+        "date": "2024-01-09",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "lemon-garlic-roasted-chicken",
+            "quantity": 2,
+            "unit": "serving"
+          },
+          {
+            "__component": "plan-item.ingredient-item",
+            "ingredient": "rice",
+            "quantity": 150
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Week 3 - Quick & Easy Meals",
+    "weekStartDate": "2024-01-15",
+    "statusOfThePlan": "archived",
+    "mealSlots": [
+      {
+        "titleOfMealSlot": "Monday Breakfast",
+        "date": "2024-01-15",
+        "slotType": "breakfast",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "classic-chocolate-chip-cookies",
+            "quantity": 2,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Monday Lunch",
+        "date": "2024-01-15",
+        "slotType": "lunch",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "chicken-stir-fry-with-vegetables",
+            "quantity": 1,
+            "unit": "serving"
+          }
+        ]
+      },
+      {
+        "titleOfMealSlot": "Monday Dinner",
+        "date": "2024-01-15",
+        "slotType": "dinner",
+        "foodOptions": [
+          {
+            "__component": "plan-item.recipe-item",
+            "recipe": "classic-spaghetti-carbonara",
+            "quantity": 1,
+            "unit": "serving"
+          }
+        ]
+      }
+    ]
+  }
+]
